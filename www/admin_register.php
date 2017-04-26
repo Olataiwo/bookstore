@@ -4,6 +4,8 @@ $title = "Store:admin register";
 
 include 'includes/header.php';
 
+include 'includes/function.php';
+
 
 $errors = [];
 
@@ -30,12 +32,10 @@ if (array_key_exists('register', $_POST)){
 		<hr>
 		<form id="register"  action ="admin_register.php" method ="POST">
 			<div>
-					<?php
+					<?php  
 
-					if(isset($errors['fname'])){
+					echo Utils::displayError('fname',$errors) ; 
 
-						echo '<span class="err">'.$errors['fname'].'</span>';
-					}
 
 					?>
 				<label>first name:</label>
