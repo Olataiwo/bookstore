@@ -52,6 +52,39 @@ class Utils {
 		return $result;
 	}
 
+	public static function doAdminLogin ($dbconn,$input) {
+
+		$result = [];
+
+		$stmt = $dbconn->prepare("SELECT * FROM admin WHERE email = :e");
+
+		$stmt->bindParam(":e",$input['email']);
+
+		$stmt->execute();
+
+		$row = $stmt->fetch(PDO::FETCH_BOTH);
+
+		if (($stmt->rowCount() != 1) || !password_verify($input['password'],$row['hash'])) {
+
+			Utils::redirect("admin_login.php?","Login failed");
+
+			exit();
+		
+		} else {
+
+			$result[] = true;
+			$result[] = $row['admin_id'];
+		}
+
+		return $result;
+
+	}
+
+
+		public static function redirect($loc, $msg) {
+			header("Location: ".$loc.$msg);
+		}
+
 }
 
 ?>
