@@ -85,6 +85,24 @@ class Utils {
 			header("Location: ".$loc.$msg);
 		}
 
+
+	public static function addCategory($dbconn,$clean) {
+
+			$stmt = $dbconn->prepare("INSERT INTO category(category_name) VALUES(:c)");
+
+			$stmt->bindParam(":c",$clean['cat']);
+
+			$stmt->execute();
+	}
+
+	public static function checkLogin() {
+
+		if(!isset($_SESSION['admin_id'])){
+
+			Utils::redirect("admin_login.php","");
+		}
+	}
+
 }
 
 ?>

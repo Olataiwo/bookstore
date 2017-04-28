@@ -1,5 +1,11 @@
 <?php
 
+session_start();
+
+$title = "Store: admin_login";
+
+
+
 include 'includes/dashboard_header.php';
 
 include 'includes/db.php' ;
@@ -29,7 +35,7 @@ if(array_key_exists('submit', $_POST)) {
 
 		if($chk[0]) {
 
-			$_SESSION['id'] = $chk[1];
+			$_SESSION['admin_id'] = $chk[1];
 
 			Utils::redirect("add_category.php","");
 		}
@@ -52,7 +58,7 @@ if(array_key_exists('submit', $_POST)) {
 
 					?>
 				<label>Email:</label>
-				<input type="text" name="email" placeholder="email">
+				<input type="text" name="email" value="phillip@email.com" placeholder="email">
 			</div>
 			<div>
 
@@ -63,7 +69,7 @@ if(array_key_exists('submit', $_POST)) {
 
 					?>
 				<label>Password:</label>	
-				<input type="password" name="password" placeholder="password">
+				<input type="password" name="password"  placeholder="password">
 			</div>
 
 			<div>
@@ -71,6 +77,8 @@ if(array_key_exists('submit', $_POST)) {
 					<input type ="submit" name="submit" value="login">
 
 			</div>
+
+
 
 
 
