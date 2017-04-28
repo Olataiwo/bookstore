@@ -46,11 +46,28 @@ if (array_key_exists('register', $_POST)){
 			}
 
 
+		$chk = Utils::doesEmailExists($conn,$_POST['email']) ;
+
+		if($chk){
+
+			$errors['email'] = "Email has already been used";
+		}
+
+
+
+
 
 
 		if(empty($errors)){
 
-			//do database stuff
+				$clean = array_map('trim',$_POST);
+
+				$hash = password_hash($clean['password'], PASSWORD_BCRYPT);
+
+				$clean['password'] = $hash;
+
+				Utils::registerAdmin($conn,$clean);
+			
 		} 
 
 		

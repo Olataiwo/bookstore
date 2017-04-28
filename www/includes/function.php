@@ -31,6 +31,27 @@ class Utils {
 
 	}
 
+
+	public static function doesEmailExists($dbconn,$email) {
+
+		$result = false;
+
+		$stmt = $dbconn->prepare("SELECT * FROM admin WHERE email = :e") ;
+
+		$stmt->bindParam(":e",$email);
+
+		$stmt->execute();
+
+		$count = $stmt->rowCount();
+
+		if ($count > 0) {
+
+			$result = true;
+		}
+
+		return $result;
+	}
+
 }
 
 ?>
