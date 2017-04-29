@@ -103,6 +103,26 @@ class Utils {
 		}
 	}
 
-}
+	public static function viewCategory ($dbconn) {
+
+		$result = "";
+
+		$stmt = $dbconn->prepare("SELECT * FROM category") ;
+
+		$stmt->execute();
+
+		while($row = $stmt->fetch(PDO::FETCH_BOTH)) {
+
+			$result.='<tr><td>'.$row[0].'</td>';
+			$result.='<td>'.$row[1].'</td>';
+			$result.='<td><a href="edit.php?cat_id='.$row[0].'">Edit</a></td>';
+			$result.='<td><a href="delete.php?cat_id='.$row[0].'">Delete</a></td></tr>';
+		}
+
+		return $result;
+	}
+
+
+} 
 
 ?>
