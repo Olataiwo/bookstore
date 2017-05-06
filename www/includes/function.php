@@ -137,7 +137,9 @@ class Utils {
 
 		$stmt = $dbconn->prepare("SELECT * FROM category WHERE category_id = :cid");
 
-		$stmt->bindParam('cid',$cat);
+		$stmt->bindParam('cid', $cat);
+
+		$stmt->execute();
 
 		$row = $stmt->fetch(PDO::FETCH_BOTH);
 
@@ -261,6 +263,42 @@ class Utils {
 	}
 
 
+	public static function getProductByID($dbconn,$pid) {
+
+			$stmt = $dbconn->prepare("SELECT * FROM product WHERE product_id = :pid");
+
+			$stmt->bindParam(":pid",$pid);
+
+			$stmt->execute();
+
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return $row;
+
+	}
+
+	public static function UpdateProduct($dbconn,$input,$pid) {
+
+			$stmt = $dbconn->prepare("UPDATE product SET product_name = :pn, author = :au, price = :pr, category_id = :ci WHERE product_id = :pid");
+
+			$data = [
+
+				":pn"=> $input['title'],
+
+				":au"=> $input['author'],
+
+				":pr"=> $input['price'],
+
+				":ci"=> $input['cat'],
+
+				":pid"=> $pid
+
+
+			];
+
+			$stmt->execute($data);
+		}
+			
 }
 
 
