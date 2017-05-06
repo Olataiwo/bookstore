@@ -232,6 +232,35 @@ class Utils {
 	}
 
 
+	public static function InsertProduct($dbconn) {
+
+			$result ="";
+
+		$statement = $dbconn->prepare("SELECT * FROM product");
+
+		$statement->execute();
+
+		While($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+
+			$result.='<tr><td>'.$row['product_name'].'</td>';
+
+			$result.='<td>'.$row['author'].'</td>';
+
+			$result.='<td>'.$row['price'].'</td>';
+
+			$result.='<td><img src = '.$row['file_loc'].' height = "20" width="30"></td>';
+
+			$result.='<td><a href= edit_product.php?id='.$row['product_id'].'>edit</a></td>';
+
+			$result.='<td><a href= delete_product.php?id='.$row['product_id'].'>delete</a></td></tr>';
+
+								
+		}
+
+		return $result;
+	}
+
+
 }
 
 
