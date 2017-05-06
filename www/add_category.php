@@ -2,6 +2,8 @@
 
 session_start();
 
+$title = "Store:add category";
+
 include 'includes/function.php' ;
 
 

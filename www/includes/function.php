@@ -166,19 +166,19 @@ class Utils {
 		$stmt->execute();
 	}
 
-	public static function UploadFile ($file, $key, $destination) {
+	public static function UploadFile ($files, $key, $destination) {
 
 		$result = [];
 
 		$rnd = rand(00000, 99999);
 
-		$filename = str_replace(" ", "_", $file['key']['name']);
+		$filename = str_replace(" ", "_", $files[$key]['name']);
 
 		$filename = $rnd.$filename;
 
 		$destination =$destination.$filename;
 
-		if(move_uploaded_file($file['key']['tmp_name'], $destination)) {
+		if(move_uploaded_file($files[$key]['tmp_name'], $destination)) {
 
 			$result[] = true;
 			$result[] = $destination;
@@ -192,9 +192,9 @@ class Utils {
 
 	}  
 
-	public static function addProduct($dbconn,$clean) {
+	public static function addProduct($dbconn,$input) {
 
-		$stmt = $dbconn->prepare("INSERT INTO product(product_name, author, price, category_id,file_loc) VALUES(:pn, :au, :pr, :cid, :fl)");
+		$stmt = $dbconn->prepare("INSERT INTO product(category_id, product_name, author, price, file_loc) VALUES(:cid, :pn, :au, :pr,  :fl)");
 
 		$data = [
 
@@ -211,6 +211,24 @@ class Utils {
 		];
 
 		$stmt->execute($data);
+	}
+
+
+	public static function fetchCategory($dbconn) {
+
+		$result ="";
+
+		$stmt = $dbconn->prepare("SELECT * FROM category");
+
+		$stmt->execute();
+
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+			$result.='<option value="'.$row['category_id'].'">'.$row['category_name'].'</option>';
+
+		}
+
+		return $result;
 	}
 
 
