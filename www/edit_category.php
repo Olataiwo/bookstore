@@ -4,12 +4,14 @@
 
 		include 'includes/function.php' ;
 
+		include 'includes/dashboard_header.php';
+
 
 		Utils::checkLogin();
 
 		$title = "Store: add_category";
 
-		include 'includes/dashboard_header.php';
+	
 
 		include 'includes/db.php' ;
 
@@ -52,6 +54,8 @@
 		<hr>
 		<form id="register"  action ="" method ="POST">
 			<div>
+
+				<?php Utils::displayError('cat_name', $errors); ?>
 					
 				<label>Category name:</label>
 				<input name="cat_name" type="text" value="<?php echo $item[1]; ?>">

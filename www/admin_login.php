@@ -4,13 +4,15 @@ session_start();
 
 $title = "Store: admin_login";
 
+include 'includes/function.php' ;
+
 
 
 include 'includes/dashboard_header.php';
 
 include 'includes/db.php' ;
 
-include 'includes/function.php' ;
+
 
 
 $errors = [];

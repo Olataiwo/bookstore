@@ -2,7 +2,7 @@
 <?php $today = date('Y');?>
 <section class="foot">
 		<div>
-			<p>&copy; <?php echo $today; ?>
+			<p>&copy; 2016 ?>
 		</div>
 	</section>
 </body>

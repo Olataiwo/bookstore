@@ -1,7 +1,7 @@
 <?php 
 
 
-define('DBNAME','bookstore');
+define('DBNAME','blog');
 define('DBUSER','root');
 define('DBPASS','riddle1');
 

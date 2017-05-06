@@ -103,6 +103,17 @@ class Utils {
 		}
 	}
 
+
+	public static function curNav($page) {
+
+		$curPage = basename($_SERVER['SCRIPT_FILENAME']);
+
+		if ($curPage == $page) {
+
+			echo "class = 'selected'";
+		}
+	}
+
 	public static function viewCategory ($dbconn) {
 
 		$result = "";
@@ -116,7 +127,7 @@ class Utils {
 			$result.='<tr><td>'.$row[0].'</td>';
 			$result.='<td>'.$row[1].'</td>';
 			$result.='<td><a href="edit_category.php?cat_id='.$row[0].'">Edit</a></td>';
-			$result.='<td><a href="delete.php?cat_id='.$row[0].'">Delete</a></td></tr>';
+			$result.='<td><a href="delete_category.php?cat_id='.$row[0].'">Delete</a></td></tr>';
 		}
 
 		return $result;
@@ -126,7 +137,7 @@ class Utils {
 
 		$stmt = $dbconn->prepare("SELECT * FROM category WHERE category_id = :cid");
 
-		$stmt->bindParam(':cid',$cat);
+		$stmt->bindParam('cid',$cat);
 
 		$row = $stmt->fetch(PDO::FETCH_BOTH);
 
@@ -143,6 +154,64 @@ class Utils {
 
 			$stmt->execute($data);
 		}
+
+
+
+	public static function deleteCategory($dbconn,$catid) {
+
+		$stmt = $dbconn->prepare("DELETE FROM category WHERE category_id = :cid");
+
+		$stmt->bindParam(":cid",$catid);
+
+		$stmt->execute();
+	}
+
+	public static function UploadFile ($file, $key, $destination) {
+
+		$result = [];
+
+		$rnd = rand(00000, 99999);
+
+		$filename = str_replace(" ", "_", $file['key']['name']);
+
+		$filename = $rnd.$filename;
+
+		$destination =$destination.$filename;
+
+		if(move_uploaded_file($file['key']['tmp_name'], $destination)) {
+
+			$result[] = true;
+			$result[] = $destination;
+
+		} else {
+
+			$result[] = false;
+		}
+
+		return $result;
+
+	}  
+
+	public static function addProduct($dbconn,$clean) {
+
+		$stmt = $dbconn->prepare("INSERT INTO product(product_name, author, price, category_id,file_loc) VALUES(:pn, :au, :pr, :cid, :fl)");
+
+		$data = [
+
+			":pn"=>$input['title'],
+
+			":au"=>$input['author'],
+
+			":pr"=>$input['price'],
+
+			":cid"=>$input['cat'],
+
+			":fl"=>$input['loc']
+
+		];
+
+		$stmt->execute($data);
+	}
 
 
 }
