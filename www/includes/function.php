@@ -298,8 +298,61 @@ class Utils {
 
 			$stmt->execute($data);
 		}
-			
+
+		public static function deleteProduct($dbconn,$pid) {
+
+			$stmt = $dbconn->prepare("DELETE FROM product WHERE product_id = :pid ");
+
+			$stmt->bindParam(":pid",$pid);
+
+			$stmt->execute();
+		} 
+
+		public static function registerUser($dbconn,$input) {
+
+			$stmt = $dbconn->prepare("INSERT into user (firstname,lastname,email,username,hash) VALUES(:f,:l,:e,:u,:h)");
+
+			$data = [
+
+				":f" => $input['fname'],
+
+				":l" => $input['lname'],
+
+				":e" => $input['email'],
+
+
+				":u" => $input['username'],
+
+
+				":h" => $input['password']
+
+
+			];
+
+			$stmt->execute($data);
+
+	}
+		public static function checkEmail($dbconn,$e) {
+
+			$result = false;
+
+			$stmt = $dbconn->prepare("SELECT * FROM user WHERE email = :e");
+
+			$stmt->bindParam(":e",$e);
+
+			$stmt->execute();
+
+			if ($stmt->rowCount() > 0) {
+
+				$result = true;
+			}
+
+			return $result;
+		}
 }
+
+		
+
 
 
 
